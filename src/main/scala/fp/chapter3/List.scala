@@ -108,6 +108,25 @@ def sum(ints: List[Int]): Int = ints match { // A function that uses pattern mat
     foldLeft(l, 0)((b, _) => b + 1)
   }
 
+  def reverse[A](l: List[A]): List[A] = {
+    foldLeft[A, List[A]](l, Nil) { (accu, a) =>
+      Cons(a, accu)
+    }
+  }
+
+  def appendFold[A](a1: List[A], a2: List[A]): List[A] = {
+    foldLeft(reverse(a1), a2) { (accu, a) =>
+      Cons(a, accu)
+    }
+  }
+
+  def concatenate[A](ls: List[List[A]]): List[A] = {
+//    reverse {
+      foldLeft[List[A], List[A]](ls, Nil) { (accu, a) =>
+        append(reverse(a), accu)
+      }
+//    }
+  }
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }

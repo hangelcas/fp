@@ -77,5 +77,27 @@ class ListTest extends FunSuite {
     assert(List.lengthFL(List(1, 2, 3)) === 3)
   }
 
+  test("reverse") {
+    assert(List.reverse(Nil) === Nil)
+    assert(List.reverse(List(1)) === List(1))
+    assert(List.reverse(List(1, 2)) === List(2, 1))
+    assert(List.reverse(List(1, 2, 3)) === List(3, 2, 1))
+  }
+
+  test("appendFold") {
+    assert(List.appendFold(Nil, Nil) === Nil)
+    assert(List.appendFold(List(1), Nil) === List(1))
+    assert(List.appendFold(Nil, List(1)) === List(1))
+    assert(List.appendFold(List(1, 2), List(3,4)) === List(1, 2, 3, 4))
+  }
+
+  test("concatenate") {
+    assert(List.concatenate(List(Nil)) === Nil)
+    assert(List.concatenate(List(Nil, Nil)) === Nil)
+    assert(List.concatenate(List(List(1), Nil)) === List(1))
+    assert(List.concatenate(List(Nil, List(1))) === List(1))
+//    assert(List.concatenate(List(List(1), List(2))) === List(1, 2))
+    assert(List.concatenate(List(List(1), List(2, 3))) === List(1, 2, 3))
+  }
 
 }
