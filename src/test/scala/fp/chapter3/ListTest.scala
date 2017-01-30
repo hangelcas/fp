@@ -96,8 +96,10 @@ class ListTest extends FunSuite {
     assert(List.concatenate(List(Nil, Nil)) === Nil)
     assert(List.concatenate(List(List(1), Nil)) === List(1))
     assert(List.concatenate(List(Nil, List(1))) === List(1))
-//    assert(List.concatenate(List(List(1), List(2))) === List(1, 2))
+    assert(List.concatenate(List(List(1), List(2))) === List(1, 2))
     assert(List.concatenate(List(List(1), List(2, 3))) === List(1, 2, 3))
+
+    assert(List.concatenate(List(List(1, 1), List(2, 2), List(3, 3))) === List(1, 1, 2, 2, 3, 3))
   }
 
   test("addOne") {
@@ -127,6 +129,10 @@ class ListTest extends FunSuite {
   test("flatMap") {
     assert(List.flatMap(Nil)(i => List(i,i)) === Nil)
     assert(List.flatMap(List(1,2,3))(i => List(i,i)) === List(1,1,2,2,3,3))
+  }
+
+  test("zipWith") {
+    assert(List.zipWith(List(1,2,3), List(4,5,6))(_ + _) === List(5,7,9))
   }
 
 

@@ -127,10 +127,8 @@ object List {
   }
 
   def concatenate[A](ls: List[List[A]]): List[A] = {
-    foldLeft[List[A], List[A]](ls, Nil) { (accu, a) =>
-      foldLeft(accu, a) { (acc, x) =>
-        Cons(x, acc)
-      }
+    foldRight[List[A], List[A]](ls, Nil) { (a, accu) =>
+      append(a, accu)
     }
   }
 
@@ -153,12 +151,21 @@ object List {
   }
 
   def filter[A](as: List[A])(f: A => Boolean): List[A] = {
-    foldRight(as, Nil:List[A]) { (a, accu) =>
-      if (f(a)) Cons(a, accu) else accu
-    }
+//    foldRight(as, Nil:List[A]) { (a, accu) =>
+//      if (f(a)) Cons(a, accu) else accu
+//    }
+
+    flatMap(as)(x => if(f(x)) Cons(x, Nil) else Nil)
   }
 
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
     concatenate(map(as)(f))
+  }
+
+
+  def zipWith[A, B](l1: List[A], l2: List[A])(f: (A, A) => B) : List[B] = (l1,l2) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h1,t1), Cons(h2,t2)) => Cons(f(h1,h2), zipWith(t1,t2)(f))
   }
 }
