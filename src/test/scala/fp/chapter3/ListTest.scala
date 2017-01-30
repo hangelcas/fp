@@ -100,4 +100,34 @@ class ListTest extends FunSuite {
     assert(List.concatenate(List(List(1), List(2, 3))) === List(1, 2, 3))
   }
 
+  test("addOne") {
+    assert(List.addOne(Nil) === Nil)
+    assert(List.addOne(List(1)) === List(2))
+    assert(List.addOne(List(1, 2)) === List(2, 3))
+    assert(List.addOne(List(1, 2, 3)) === List(2, 3, 4))
+  }
+
+
+  test("turnToString") {
+    assert(List.turnToString(Nil) === Nil)
+    assert(List.turnToString(List(1.0)) === List("1.0"))
+    assert(List.turnToString(List(1.0, 2.0)) === List("1.0", "2.0"))
+    assert(List.turnToString(List(1.0, 2.0, 3.0)) === List("1.0", "2.0", "3.0"))
+  }
+
+
+  test("filter") {
+    def isEven(i: Int) = i % 2 == 0
+    assert(List.filter(Nil)(isEven) === Nil)
+    assert(List.filter(List(1))(isEven) === Nil)
+    assert(List.filter(List(1, 2))(isEven) === List(2))
+    assert(List.filter(List(1, 2, 3))(isEven) === List(2))
+  }
+
+  test("flatMap") {
+    assert(List.flatMap(Nil)(i => List(i,i)) === Nil)
+    assert(List.flatMap(List(1,2,3))(i => List(i,i)) === List(1,1,2,2,3,3))
+  }
+
+
 }
